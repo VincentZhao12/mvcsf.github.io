@@ -3,13 +3,21 @@ import Link from 'next/link';
 import logo from '../public/logo.png';
 import Button from './Button';
 import styles from '../styles/Nav.module.css';
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
-import { FC, useState } from 'react';
+import { AiOutlineMenu, AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
+import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useAuth } from '../context/AuthContext';
+import { User } from 'firebase/auth';
 
 const Nav = () => {
     const [shown, setShown] = useState<boolean>(false);
+    const { user } = useAuth();
     const router = useRouter();
+
+    useEffect(() => {
+        console.log(user);
+        console.log(user.uid);
+    }, []);
 
     return (
         <div className={styles.nav}>
@@ -39,22 +47,34 @@ const Nav = () => {
                     <Link href="/contact">
                         <a className={styles.navlink}>Contact</a>
                     </Link>
-                    <div>
-                        <Button
-                            variant="primary"
-                            onClick={() => router.push('/login')}
-                        >
-                            Log In
-                        </Button>
-                    </div>
-                    <div>
-                        <Button
-                            variant="primary-outline"
-                            onClick={() => router.push('/signup')}
-                        >
-                            Sign Up
-                        </Button>
-                    </div>
+                    {!user.uid ? (
+                        <>
+                            <div className={styles.navButton}>
+                                <Button
+                                    variant="primary"
+                                    onClick={() => router.push('/login')}
+                                >
+                                    Log In
+                                </Button>
+                            </div>
+                            <div className={styles.navButton}>
+                                <Button
+                                    variant="primary-outline"
+                                    onClick={() => router.push('/signup')}
+                                >
+                                    Sign Up
+                                </Button>
+                            </div>
+                        </>
+                    ) : (
+                        <div className={styles.navlink}>
+                            <Link href={`/profile/${user.uid}`}>
+                                <a>
+                                    <AiOutlineUser className={styles.icon} />
+                                </a>
+                            </Link>
+                        </div>
+                    )}
                 </div>
                 <div
                     className={styles.menubuttonCont}
@@ -65,20 +85,23 @@ const Nav = () => {
                     </Button>
                 </div>
             </div>
-            <SideNav shown={shown} />
+            <SideNav shown={shown} close={() => setShown(false)} />
         </div>
     );
 };
 
 interface SideNavProps {
     shown: boolean;
+    user?: User;
+    close: () => void;
 }
 
-const SideNav: FC<SideNavProps> = ({ shown }) => {
+const SideNav: FC<SideNavProps> = ({ shown, user, close }) => {
+    const router = useRouter();
     return (
         <>
             {shown && (
-                <div className={styles.sidenav}>
+                <div className={styles.sidenav} onClick={close}>
                     <Link href="/about">
                         <a className={styles.menulink + ' ' + styles.delay1}>
                             About
@@ -104,18 +127,37 @@ const SideNav: FC<SideNavProps> = ({ shown }) => {
                             Contact
                         </a>
                     </Link>
-                    <Button
-                        variant="primary"
-                        className={styles.sidebutton + ' ' + styles.delay6}
-                    >
-                        Log In
-                    </Button>
-                    <Button
-                        variant="primary-outline"
-                        className={styles.sidebutton + ' ' + styles.delay7}
-                    >
-                        Sign Up
-                    </Button>
+
+                    {user?.uid ? (
+                        <div className={styles.menulink}>
+                            <Link href={`/profile/${user?.uid}`}>
+                                <a>
+                                    <AiOutlineUser className={styles.icon} />
+                                </a>
+                            </Link>
+                        </div>
+                    ) : (
+                        <>
+                            <Button
+                                variant="primary"
+                                className={
+                                    styles.sidebutton + ' ' + styles.delay6
+                                }
+                                onClick={() => router.push('/login')}
+                            >
+                                Log In
+                            </Button>
+                            <Button
+                                variant="primary-outline"
+                                className={
+                                    styles.sidebutton + ' ' + styles.delay7
+                                }
+                                onClick={() => router.push('/signup')}
+                            >
+                                Sign Up
+                            </Button>
+                        </>
+                    )}
                 </div>
             )}
         </>

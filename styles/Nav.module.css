@@ -53,6 +53,10 @@
     transform: scale(1.5);
 }
 
+.navButton {
+    margin: 0.5rem;
+}
+
 .sidenav {
     height: calc(100vh - 100px - 1rem);
     width: 100%;
@@ -142,4 +146,9 @@
     .sidenav {
         display: none;
     }
+}
+
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
 }
