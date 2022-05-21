@@ -24,22 +24,25 @@ const profile: FC<profileProps> = ({ userInfo }) => {
     return (
         <div className={styles.container}>
             <h1>{userInfo.name}</h1>
-            <FcReadingEbook className={styles.icon} />
-            <form onSubmit={handleSubmit}>
-                Activated{' '}
-                <input
-                    type="checkbox"
-                    title="Activated"
-                    name="activated"
-                    disabled={!user.admin}
-                    defaultChecked={userInfo.activated}
-                />
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.inputField}>
+                    Activated{' '}
+                    <input
+                        type="checkbox"
+                        title="Activated"
+                        name="activated"
+                        disabled={!user.admin}
+                        defaultChecked={userInfo.activated}
+                    />
+                </div>
+
                 <TextInput
                     name="Name"
                     title="name"
                     placeholder="Name"
                     defaultValue={userInfo.name}
                     disabled={!user.admin && user.uid !== userInfo.uid}
+                    className={styles.inputField}
                 />
                 <TextInput
                     name="graduationYear"
@@ -48,6 +51,7 @@ const profile: FC<profileProps> = ({ userInfo }) => {
                     defaultValue={userInfo.graduationYear + ''}
                     disabled={!user.admin && user.uid !== userInfo.uid}
                     type="number"
+                    className={styles.inputField}
                 />
                 <TextInput
                     name="phoneNumber"
@@ -56,6 +60,7 @@ const profile: FC<profileProps> = ({ userInfo }) => {
                     defaultValue={userInfo.phoneNumber}
                     disabled={!user.admin && user.uid !== userInfo.uid}
                     type="tel"
+                    className={styles.inputField}
                 />
                 <TextInput
                     name="studentId"
@@ -64,13 +69,20 @@ const profile: FC<profileProps> = ({ userInfo }) => {
                     defaultValue={userInfo.studentId + ''}
                     disabled={!user.admin && user.uid !== userInfo.uid}
                     type="number"
+                    className={styles.inputField}
                 />
                 {(user.admin || user.uid === userInfo.uid) && (
-                    <Button variant="primary">Save Changes</Button>
+                    <Button variant="primary" className={styles.inputField}>
+                        Save Changes
+                    </Button>
                 )}
             </form>
             {user.uid === userInfo.uid && (
-                <Button variant="secondary" onClick={logout}>
+                <Button
+                    variant="secondary"
+                    onClick={logout}
+                    className={styles.logout}
+                >
                     Log Out
                 </Button>
             )}

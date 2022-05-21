@@ -44,3 +44,9 @@
     background-color: white;
     z-index: 1;
 }
+
+.inputField:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    cursor: not-allowed;
+}

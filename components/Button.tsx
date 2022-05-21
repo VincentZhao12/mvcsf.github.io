@@ -18,6 +18,7 @@ interface ButtonProps {
     id?: string;
     type?: 'button' | 'submit' | 'reset';
     loading?: boolean;
+    onMouseDown?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -30,23 +31,23 @@ const Button: FC<ButtonProps> = ({
     id,
     type = 'button',
     loading,
+    onMouseDown,
 }) => {
     return (
-        <div>
-            <button
-                onClick={() => {
-                    onClick && onClick();
-                }}
-                disabled={disabled || loading}
-                className={`${styles.button} ${
-                    variant ? styles[variant] : ''
-                } ${fullWidth ? styles.fullWidth : ' '} ${className}`}
-                id={id}
-                type={type}
-            >
-                {loading ? <Spinner /> : <span>{children}</span>}
-            </button>
-        </div>
+        <button
+            onClick={() => {
+                onClick && onClick();
+            }}
+            disabled={disabled || loading}
+            className={`${styles.button} ${variant ? styles[variant] : ''} ${
+                fullWidth ? styles.fullWidth : ' '
+            } ${className}`}
+            id={id}
+            type={type}
+            onMouseDown={onMouseDown}
+        >
+            {loading ? <Spinner /> : <span>{children}</span>}
+        </button>
     );
 };
 

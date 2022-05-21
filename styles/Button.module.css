@@ -54,3 +54,8 @@
     border-color: var(--tertiary);
     color: var(--tertiary);
 }
+
+.button:disabled {
+    filter: grayscale(100%);
+    cursor: not-allowed;
+}

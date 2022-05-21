@@ -76,11 +76,12 @@
     }
 }
 @media (max-width: 950px) {
-    .signupGraphic {
+    .loginGraphic {
         z-index: -1;
         top: 30%;
         position: absolute;
-        width: 150%;
+        width: 100%;
+        overflow: hidden;
     }
     .inputArea {
         width: 50%;

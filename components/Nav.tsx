@@ -6,8 +6,7 @@ import styles from '../styles/Nav.module.css';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
 import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../context/AuthContext';
-import { User } from 'firebase/auth';
+import { useAuth, User } from '../context/AuthContext';
 
 const Nav = () => {
     const [shown, setShown] = useState<boolean>(false);
@@ -47,6 +46,11 @@ const Nav = () => {
                     <Link href="/contact">
                         <a className={styles.navlink}>Contact</a>
                     </Link>
+                    {user.admin && (
+                        <Link href="/admin">
+                            <a className={styles.navlink}>Admin</a>
+                        </Link>
+                    )}
                     {!user.uid ? (
                         <>
                             <div className={styles.navButton}>
@@ -85,7 +89,7 @@ const Nav = () => {
                     </Button>
                 </div>
             </div>
-            <SideNav shown={shown} close={() => setShown(false)} />
+            <SideNav shown={shown} close={() => setShown(false)} user={user} />
         </div>
     );
 };
@@ -127,14 +131,31 @@ const SideNav: FC<SideNavProps> = ({ shown, user, close }) => {
                             Contact
                         </a>
                     </Link>
+                    {user?.admin && (
+                        <Link href="/admin">
+                            <a
+                                className={
+                                    styles.menulink + ' ' + styles.delay5
+                                }
+                            >
+                                Admin
+                            </a>
+                        </Link>
+                    )}
 
                     {user?.uid ? (
                         <div className={styles.menulink}>
-                            <Link href={`/profile/${user?.uid}`}>
-                                <a>
-                                    <AiOutlineUser className={styles.icon} />
-                                </a>
-                            </Link>
+                            <Button
+                                variant="primary"
+                                className={
+                                    styles.sidebutton + ' ' + styles.delay6
+                                }
+                                onClick={() =>
+                                    router.push(`/profile/${user.uid}`)
+                                }
+                            >
+                                Profile
+                            </Button>
                         </div>
                     ) : (
                         <>

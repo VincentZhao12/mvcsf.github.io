@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.titleField {
+    width: 50%;
+}
+
+.textField {
+    width: 100%;
+}
+
+.inputArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.inputArea1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 100%;
+}
+
+@media (max-width: 950px) {
+    .inputArea {
+        flex-direction: column;
+        width: 80%;
+    }
+    .titleField {
+        width: 80%;
+    }
+    .inputArea1 {
+        width: 100%;
+    }
+    .textField {
+        width: 100%;
+    }
+}
