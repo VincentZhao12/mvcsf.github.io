@@ -26,8 +26,8 @@ const TextInput: FC<TextInputProps> = ({
     required,
     defaultValue,
 }) => {
-    const [focused, setFocused] = useState<boolean>(!!defaultValue);
-    const [empty, setEmpty] = useState<boolean>(!defaultValue);
+    const [focused, setFocused] = useState<boolean>(!!defaultValue || !!value);
+    const [empty, setEmpty] = useState<boolean>(!defaultValue && !value);
     const [neverFocused, setNeverFocused] = useState<boolean>(!defaultValue);
     return (
         <div className={`${styles.inputContainer} ${className}`}>

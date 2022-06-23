@@ -5,7 +5,7 @@ import styles from '../../styles/profile.module.css';
 import { FcReadingEbook } from 'react-icons/fc';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 interface profileProps {
@@ -19,6 +19,36 @@ const profile: FC<profileProps> = ({ userInfo }) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const name = (
+            e.currentTarget.elements.namedItem('name') as HTMLInputElement
+        ).value;
+        const phoneNumber = (
+            e.currentTarget.elements.namedItem(
+                'phoneNumber',
+            ) as HTMLInputElement
+        ).value;
+        const studentId = (
+            e.currentTarget.elements.namedItem('studentId') as HTMLInputElement
+        ).value;
+        const graduationYear = (
+            e.currentTarget.elements.namedItem(
+                'graduationYear',
+            ) as HTMLInputElement
+        ).value;
+        const activated = (
+            e.currentTarget.elements.namedItem('activated') as HTMLInputElement
+        ).value;
+
+        const userDoc = doc(db, 'users', uid + '');
+
+        updateDoc(userDoc, {
+            name,
+            phoneNumber,
+            studentId,
+            graduationYear,
+            activated,
+        });
     };
 
     return (
@@ -37,7 +67,7 @@ const profile: FC<profileProps> = ({ userInfo }) => {
                 </div>
 
                 <TextInput
-                    name="Name"
+                    name="name"
                     title="name"
                     placeholder="Name"
                     defaultValue={userInfo.name}
@@ -72,7 +102,11 @@ const profile: FC<profileProps> = ({ userInfo }) => {
                     className={styles.inputField}
                 />
                 {(user.admin || user.uid === userInfo.uid) && (
-                    <Button variant="primary" className={styles.inputField}>
+                    <Button
+                        variant="primary"
+                        className={styles.inputField}
+                        type={'submit'}
+                    >
                         Save Changes
                     </Button>
                 )}
@@ -90,7 +124,7 @@ const profile: FC<profileProps> = ({ userInfo }) => {
     );
 };
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context:any) => {
     const userInfoRef = doc(db, 'users', context.params.uid);
     const userInfoDoc = await getDoc(userInfoRef);
     const userInfo = userInfoDoc.data();

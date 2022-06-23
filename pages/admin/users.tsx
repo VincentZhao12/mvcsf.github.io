@@ -36,56 +36,60 @@ const users: FC<usersProps> = ({ userData }) => {
     return (
         <div className={styles.container}>
             <h1>User Dashboard</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
+            <div className={styles.tableContainer}>
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
 
-                        <th>Graduation Year</th>
-                        <th>Student ID</th>
-                        <th>email</th>
-                        <th>Phone Number</th>
-                        <th>Activated</th>
-                        <th>Profile</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {userData.map((user, index) => {
-                        return (
-                            <tr key={user.uid}>
-                                <td>{user.name}</td>
-                                <td>{user.graduationYear}</td>
-                                <td>{user.studentId}</td>
-                                <td>{user.email}</td>
-                                <td>{user.phoneNumber}</td>
-                                <td className={styles.textCenter}>
-                                    <input
-                                        title={'activation' + user.uid}
-                                        type="checkbox"
-                                        checked={activations[index]}
-                                        onChange={(e) => {
-                                            activateUser(
-                                                user.uid,
-                                                e.target.checked,
-                                                index,
-                                            );
-                                        }}
-                                    />
-                                </td>
-                                <td>
-                                    <Button
-                                        onClick={() =>
-                                            router.push(`/profile/${user.uid}`)
-                                        }
-                                    >
-                                        Edit
-                                    </Button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                            <th>Graduation Year</th>
+                            <th>Student ID</th>
+                            <th>email</th>
+                            <th>Phone Number</th>
+                            <th>Activated</th>
+                            <th>Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userData.map((user, index) => {
+                            return (
+                                <tr key={user.uid}>
+                                    <td>{user.name}</td>
+                                    <td>{user.graduationYear}</td>
+                                    <td>{user.studentId}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.phoneNumber}</td>
+                                    <td className={styles.textCenter}>
+                                        <input
+                                            title={'activation' + user.uid}
+                                            type="checkbox"
+                                            checked={activations[index]}
+                                            onChange={(e) => {
+                                                activateUser(
+                                                    user.uid,
+                                                    e.target.checked,
+                                                    index,
+                                                );
+                                            }}
+                                        />
+                                    </td>
+                                    <td>
+                                        <Button
+                                            onClick={() =>
+                                                router.push(
+                                                    `/profile/${user.uid}`,
+                                                )
+                                            }
+                                        >
+                                            Edit
+                                        </Button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

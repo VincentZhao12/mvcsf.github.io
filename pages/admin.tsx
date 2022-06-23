@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import React, { FC, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import styles from '../styles/admin.module.css';
@@ -8,6 +8,8 @@ interface adminProps {}
 
 const admin: FC<adminProps> = () => {
     const { user } = useAuth();
+
+    const router = useRouter();
 
     useEffect(() => {
         if (!user.admin) {
@@ -18,9 +20,7 @@ const admin: FC<adminProps> = () => {
     if (!user.admin) return <></>;
     return (
         <div className={styles.container}>
-            <h1>Admin</h1>
-            <Link href="/admin/users">User Dashboard</Link>
-            <Link href="/admin/events">Events</Link>
+            <h1 className={styles.title}>Admin</h1>
         </div>
     );
 };

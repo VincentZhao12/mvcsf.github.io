@@ -17,9 +17,14 @@ import Button from './Button';
 interface RichTextInputProps {
     defaultValue?: RawDraftContentState;
     onChange?: (rawValue: RawDraftContentState) => void;
+    title?: string;
 }
 
-const RichTextInput: FC<RichTextInputProps> = ({ defaultValue, onChange }) => {
+const RichTextInput: FC<RichTextInputProps> = ({
+    defaultValue,
+    onChange,
+    title,
+}) => {
     const [editorState, setEditorState] = useState<EditorState>(
         defaultValue
             ? EditorState.createWithContent(convertFromRaw(defaultValue))
@@ -142,7 +147,9 @@ const RichTextInput: FC<RichTextInputProps> = ({ defaultValue, onChange }) => {
                 }}
                 placeholder={
                     RichUtils.getCurrentBlockType(editorState) === 'unstyled'
-                        ? 'Start typing here'
+                        ? ` Start typing ${
+                              title ? title.toLowerCase() + ' ' : ''
+                          }here...`
                         : ''
                 }
             />

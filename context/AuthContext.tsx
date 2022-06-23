@@ -85,7 +85,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        console.log('hi');
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             const uid = user?.uid;
 

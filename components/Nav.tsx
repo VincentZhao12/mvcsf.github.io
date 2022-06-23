@@ -14,8 +14,8 @@ const Nav = () => {
     const router = useRouter();
 
     useEffect(() => {
-        console.log(user);
-        console.log(user.uid);
+        // console.log(user);
+        // console.log(user.uid);
     }, []);
 
     return (

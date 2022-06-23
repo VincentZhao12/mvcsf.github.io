@@ -9,3 +9,17 @@
 .textCenter {
     text-align: center;
 }
+
+/* .table {
+    overflow-x: auto;
+    width: 50%;
+} */
+
+.tableContainer {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 300px;
+}
