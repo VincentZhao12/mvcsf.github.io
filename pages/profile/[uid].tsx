@@ -5,14 +5,20 @@ import styles from '../../styles/profile.module.css';
 import { FcReadingEbook } from 'react-icons/fc';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    updateDoc,
+} from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 interface profileProps {
     userInfo: User;
 }
 
-const profile: FC<profileProps> = ({ userInfo }) => {
+const Profile: FC<profileProps> = ({ userInfo }) => {
     const router = useRouter();
     const { uid } = router.query;
     const { user, logout } = useAuth();
@@ -124,7 +130,18 @@ const profile: FC<profileProps> = ({ userInfo }) => {
     );
 };
 
-export const getServerSideProps = async (context:any) => {
+export const getStaticPaths = async () => {
+    const usersRef = collection(db, 'users');
+    const usersColl = await getDocs(usersRef);
+
+    const ids = usersColl.docs.map((doc) => doc.id);
+
+    const paths = ids.map((id) => ({ params: { uid: id } }));
+
+    return { paths, fallback: false };
+};
+
+export const getStaticProps = async (context: any) => {
     const userInfoRef = doc(db, 'users', context.params.uid);
     const userInfoDoc = await getDoc(userInfoRef);
     const userInfo = userInfoDoc.data();
@@ -135,4 +152,4 @@ export const getServerSideProps = async (context:any) => {
     };
 };
 
-export default profile;
+export default Profile;

@@ -19,7 +19,7 @@ const authErrors = {
     'auth/wrong-password': 'That password is incorrect.',
 };
 
-const signup: FC<signupProps> = () => {
+const Signup: FC<signupProps> = () => {
     const { signup, user } = useAuth();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -90,7 +90,7 @@ const signup: FC<signupProps> = () => {
     return (
         <div className={styles.container}>
             <div className={styles.signupGraphic}>
-                <Image src={SignupGraphic} />
+                <Image src={SignupGraphic} alt="graphic" />
             </div>
             <div className={styles.inputArea}>
                 {error && (
@@ -177,4 +177,4 @@ const signup: FC<signupProps> = () => {
     );
 };
 
-export default signup;
+export default Signup;

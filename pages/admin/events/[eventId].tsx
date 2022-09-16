@@ -1,4 +1,10 @@
-import { collection, doc, getDoc, Timestamp } from 'firebase/firestore';
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    Timestamp,
+} from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import React, { FC, useEffect } from 'react';
 import EventInput, { EventType } from '../../../components/EventInput';
@@ -9,7 +15,7 @@ interface editEventProps {
     event: EventType;
 }
 
-const editEvent: FC<editEventProps> = ({ event }) => {
+const EditEvent: FC<editEventProps> = ({ event }) => {
     const router = useRouter();
 
     const { user } = useAuth();
@@ -27,7 +33,18 @@ const editEvent: FC<editEventProps> = ({ event }) => {
     );
 };
 
-export const getServerSideProps = async (context: any) => {
+export const getStaticPaths = async () => {
+    const eventsRef = collection(db, 'events');
+    const eventsColl = await getDocs(eventsRef);
+
+    const ids = eventsColl.docs.map((doc) => doc.id);
+
+    const paths = ids.map((id) => ({ params: { eventId: id } }));
+
+    return { paths, fallback: false };
+};
+
+export const getStaticProps = async (context: any) => {
     const eventId = context.params.eventId as string;
 
     if (eventId === 'createEvent')
@@ -59,4 +76,4 @@ export const getServerSideProps = async (context: any) => {
     };
 };
 
-export default editEvent;
+export default EditEvent;

@@ -7,6 +7,15 @@ body {
     --primary: #4caf50;
     --secondary: #f44336;
     --tertiary: #ff9800;
+    --beige: #ffdc95;
+    --fuzzy-wuzzy: #c77373;
+}
+
+@font-face {
+    font-family: 'Adreena Script';
+    src: url('../fonts/AdreenaScript-Demo.ttf');
+    font-weight: normal;
+    font-style: normal;
 }
 
 pre {

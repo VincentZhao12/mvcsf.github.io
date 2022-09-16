@@ -25,7 +25,7 @@ interface eventsProps {
     events: EventType[];
 }
 
-const events: FC<eventsProps> = ({ events }) => {
+const Events: FC<eventsProps> = ({ events }) => {
     const router = useRouter();
 
     const { user } = useAuth();
@@ -100,6 +100,7 @@ const EventCard = ({ event }: { event: EventType }) => {
             {event.imgUrl && (
                 <div className={styles.eventImage}>
                     <Image
+                        alt="graphic"
                         src={event.imgUrl}
                         width={2400}
                         height={2400}
@@ -122,7 +123,7 @@ const EventCard = ({ event }: { event: EventType }) => {
     );
 };
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
     const eventsCollection = query(collection(db, 'events'), orderBy('date'));
 
     const events = (await getDocs(eventsCollection)).docs.map((doc) => {
@@ -149,4 +150,4 @@ export const getServerSideProps = async () => {
     };
 };
 
-export default events;
+export default Events;

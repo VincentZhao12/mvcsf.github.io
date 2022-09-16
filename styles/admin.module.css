@@ -3,9 +3,24 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    justify-self: center;
 }
 
 .title {
     width: 70%;
     text-align: left;
+}
+
+.features {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 100%;
+}
+
+.features > div {
+    margin: 3%;
 }

@@ -19,7 +19,7 @@ const authErrors = {
     'auth/wrong-password': 'That password is incorrect.',
 };
 
-const login: FC<loginProps> = () => {
+const Login: FC<loginProps> = () => {
     const { login, user } = useAuth();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -27,7 +27,7 @@ const login: FC<loginProps> = () => {
 
     useEffect(() => {
         if (user.uid) router.push('/');
-    }, []);
+    }, [user, user.studentId, router]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -92,14 +92,14 @@ const login: FC<loginProps> = () => {
                     </Button>
                 </form>
                 <p className={styles.bottomText}>
-                    If you don't have an account,{' '}
+                    If you don&apos;t have an account,{' '}
                     <Link href={'/signup'}>
                         <a className={styles.link}>sign up</a>
                     </Link>
                 </p>
             </div>
             <div className={styles.loginGraphic}>
-                <Image src={LoginGraphic} />
+                <Image src={LoginGraphic} alt="graphic" />
                 <p className={styles.attribution}>
                     <a href="https://www.freepik.com/vectors/volunteer">
                         Volunteer vector created by pch.vector - www.freepik.com
@@ -110,4 +110,4 @@ const login: FC<loginProps> = () => {
     );
 };
 
-export default login;
+export default Login;

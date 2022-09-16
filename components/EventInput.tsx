@@ -143,6 +143,7 @@ const EventInput: FC<EventInputProps> = ({ initialEvent }) => {
                             }
                             width={100}
                             height={100}
+                            alt="icon"
                         />
                     ) : (
                         <></>

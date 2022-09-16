@@ -13,18 +13,18 @@ const Nav = () => {
     const { user } = useAuth();
     const router = useRouter();
 
-    useEffect(() => {
-        // console.log(user);
-        // console.log(user.uid);
-    }, []);
-
     return (
         <div className={styles.nav}>
             <div className={styles.navbar}>
                 <Link href="/">
                     <a>
                         <div className={styles.logoContainer}>
-                            <Image src={logo} height={100} width={100} />
+                            <Image
+                                src={logo}
+                                height={100}
+                                width={100}
+                                alt="graphic"
+                            />
                             <h1 className={styles.logoText}>Monta Vista CSF</h1>
                         </div>
                     </a>

@@ -10,7 +10,7 @@ interface usersProps {
     userData: User[];
 }
 
-const users: FC<usersProps> = ({ userData }) => {
+const Users: FC<usersProps> = ({ userData }) => {
     const [activations, setActivations] = useState<boolean[]>(
         userData.map((user) => user.activated),
     );
@@ -94,9 +94,9 @@ const users: FC<usersProps> = ({ userData }) => {
     );
 };
 
-export default users;
+export default Users;
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
     const usersCollection = collection(db, 'users');
     const users = await getDocs(usersCollection);
     const userData = users.docs.map((user) => user.data());
