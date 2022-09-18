@@ -123,7 +123,7 @@ const EventCard = ({ event }: { event: EventType }) => {
     );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
     const eventsCollection = query(collection(db, 'events'), orderBy('date'));
 
     const events = (await getDocs(eventsCollection)).docs.map((doc) => {

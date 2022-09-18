@@ -33,18 +33,7 @@ const EditEvent: FC<editEventProps> = ({ event }) => {
     );
 };
 
-export const getStaticPaths = async () => {
-    const eventsRef = collection(db, 'events');
-    const eventsColl = await getDocs(eventsRef);
-
-    const ids = eventsColl.docs.map((doc) => doc.id);
-
-    const paths = ids.map((id) => ({ params: { eventId: id } }));
-
-    return { paths, fallback: false };
-};
-
-export const getStaticProps = async (context: any) => {
+export const getServerSideProps = async (context: any) => {
     const eventId = context.params.eventId as string;
 
     if (eventId === 'createEvent')

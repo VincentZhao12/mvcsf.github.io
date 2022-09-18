@@ -96,7 +96,7 @@ const Users: FC<usersProps> = ({ userData }) => {
 
 export default Users;
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
     const usersCollection = collection(db, 'users');
     const users = await getDocs(usersCollection);
     const userData = users.docs.map((user) => user.data());
