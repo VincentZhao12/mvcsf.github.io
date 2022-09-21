@@ -47,6 +47,7 @@ const Users: FC<usersProps> = ({ userData }) => {
                             <th>email</th>
                             <th>Phone Number</th>
                             <th>Activated</th>
+                            <th>Transcript</th>
                             <th>Profile</th>
                         </tr>
                     </thead>
@@ -59,6 +60,7 @@ const Users: FC<usersProps> = ({ userData }) => {
                                     <td>{user.studentId}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phoneNumber}</td>
+
                                     <td className={styles.textCenter}>
                                         <input
                                             title={'activation' + user.uid}
@@ -72,6 +74,20 @@ const Users: FC<usersProps> = ({ userData }) => {
                                                 );
                                             }}
                                         />
+                                    </td>
+                                    <td>
+                                        {user.transcript ? (
+                                            <a
+                                                className={styles.link}
+                                                href={user.transcript}
+                                                target="_blank"
+                                                rel="noreferrer noopener"
+                                            >
+                                                OPEN
+                                            </a>
+                                        ) : (
+                                            'None'
+                                        )}
                                     </td>
                                     <td>
                                         <Button

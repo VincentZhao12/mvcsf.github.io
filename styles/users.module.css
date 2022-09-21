@@ -10,6 +10,11 @@
     text-align: center;
 }
 
+.link {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
 /* .table {
     overflow-x: auto;
     width: 50%;
