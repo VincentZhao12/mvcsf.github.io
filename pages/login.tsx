@@ -59,7 +59,7 @@ const Login: FC<loginProps> = () => {
             <div className={styles.inputArea}>
                 {error && (
                     <Alert
-                        title="Error Creating Account"
+                        title="Error Logging In"
                         message={error}
                         type="error"
                     />

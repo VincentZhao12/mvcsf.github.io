@@ -1,25 +1,23 @@
-import { convertToRaw, EditorState } from 'draft-js';
 import {
+    query,
     collection,
+    orderBy,
+    getDocs,
+    Timestamp,
     deleteDoc,
     doc,
-    getDocs,
-    orderBy,
-    query,
-    Timestamp,
 } from 'firebase/firestore';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import Button from '../../components/Button';
-import Card from '../../components/Card';
-import EventInput, { EventType } from '../../components/EventInput';
-import ReadOnlyRichText from '../../components/ReadOnlyRichText';
-import { db } from '../../config/firebase';
-import { useAuth } from '../../context/AuthContext';
-import styles from '../../styles/eventsAdmin.module.css';
+import { db } from '../config/firebase';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import { EventType } from '../components/EventInput';
+import ReadOnlyRichText from '../components/ReadOnlyRichText';
+import { useAuth } from '../context/AuthContext';
+import styles from '../styles/events.module.css';
 
 interface eventsProps {
     events: EventType[];
@@ -30,22 +28,10 @@ const Events: FC<eventsProps> = ({ events }) => {
 
     const { user } = useAuth();
 
-    useEffect(() => {
-        if (!user.admin) {
-            router.push('/');
-        }
-    }, []);
-
     return (
         <div className={styles.container}>
             <div className={styles.titleBar}>
-                <h1>Events Dashboard</h1>
-                <Button
-                    variant="primary"
-                    onClick={() => router.push('/admin/events/createEvent')}
-                >
-                    Add Event
-                </Button>
+                <h1>Events</h1>
             </div>
             <div className={styles.eventsGrid}>
                 {events.map((event, index) => (
@@ -75,28 +61,7 @@ const EventCard = ({ event }: { event: EventType }) => {
     };
 
     return (
-        <Card>
-            <div className={styles.buttonGroup}>
-                <Button
-                    variant="tertiary"
-                    loading={loading}
-                    onClick={() =>
-                        router.push(
-                            '/admin/events/' + (event.eventId ?? 'create'),
-                        )
-                    }
-                >
-                    <AiOutlineEdit aria-label="edit" />
-                </Button>
-
-                <Button
-                    variant="secondary"
-                    loading={loading}
-                    onClick={handleDelete}
-                >
-                    <AiOutlineDelete aria-label="delete" />
-                </Button>
-            </div>
+        <Card className={styles.eventCard}>
             {event.imgUrl && (
                 <div className={styles.eventImage}>
                     <Image

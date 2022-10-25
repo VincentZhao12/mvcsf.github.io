@@ -26,6 +26,7 @@ export interface User {
     phoneNumber: string;
     studentId: string | number;
     transcript?: string;
+    hours?: number;
 }
 
 interface ContextValue {

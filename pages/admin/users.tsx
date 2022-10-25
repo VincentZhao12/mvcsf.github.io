@@ -2,6 +2,7 @@ import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
 import Button from '../../components/Button';
+import Counter from '../../components/Counter';
 import { db } from '../../config/firebase';
 import { useAuth, User } from '../../context/AuthContext';
 import styles from '../../styles/users.module.css';
@@ -31,6 +32,11 @@ const Users: FC<usersProps> = ({ userData }) => {
         }
     }, []);
 
+    const updateUserHours = async (uid: string, newHours: number) => {
+        const userDoc = doc(db, 'users', uid);
+        await updateDoc(userDoc, { hours: newHours });
+    };
+
     if (!user.admin) return <></>;
 
     return (
@@ -48,6 +54,7 @@ const Users: FC<usersProps> = ({ userData }) => {
                             <th>Phone Number</th>
                             <th>Activated</th>
                             <th>Transcript</th>
+                            <th>Hours</th>
                             <th>Profile</th>
                         </tr>
                     </thead>
@@ -88,6 +95,17 @@ const Users: FC<usersProps> = ({ userData }) => {
                                         ) : (
                                             'None'
                                         )}
+                                    </td>
+                                    <td>
+                                        <Counter
+                                            defaultValue={user.hours || 0}
+                                            onChange={(newHours) =>
+                                                updateUserHours(
+                                                    user.uid,
+                                                    newHours,
+                                                )
+                                            }
+                                        />
                                     </td>
                                     <td>
                                         <Button
