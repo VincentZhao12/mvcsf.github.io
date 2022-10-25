@@ -63,6 +63,10 @@ const Profile: FC<profileProps> = ({ userInfo }) => {
     return (
         <div className={styles.container}>
             <h1>{userInfo.name}</h1>
+            <div className={styles.hours}>
+                <h3>Hours</h3>
+                <p>{user.hours ?? 0}</p>
+            </div>
             {user.uid == uid && (
                 <div className={styles.upload}>
                     <h3 className={styles.sectionHeader}>Upload Transcript</h3>
