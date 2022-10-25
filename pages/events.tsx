@@ -34,12 +34,32 @@ const Events: FC<eventsProps> = ({ events }) => {
                 <h1>Events</h1>
             </div>
             <div className={styles.eventsGrid}>
-                {events.map((event, index) => (
-                    <EventCard
-                        event={event}
-                        key={event.eventId ?? index + ''}
-                    />
-                ))}
+                {events.map((event, index) =>
+                    Date.parse(event.date || '') > Date.now() ? (
+                        <EventCard
+                            event={event}
+                            key={event.eventId ?? index + ''}
+                        />
+                    ) : (
+                        <></>
+                    ),
+                )}
+            </div>
+
+            <div className={styles.titleBar}>
+                <h1>Past Events</h1>
+            </div>
+            <div className={styles.eventsGrid}>
+                {events.map((event, index) =>
+                    Date.parse(event.date || '') < Date.now() ? (
+                        <EventCard
+                            event={event}
+                            key={event.eventId ?? index + ''}
+                        />
+                    ) : (
+                        <></>
+                    ),
+                )}
             </div>
         </div>
     );
